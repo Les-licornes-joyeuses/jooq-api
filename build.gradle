@@ -1,0 +1,117 @@
+import groovy.xml.MarkupBuilder
+import org.jooq.util.postgres.*
+import org.jooq.util.jaxb.tools.StringAdapter
+import groovy.xml.MarkupBuilder
+import org.jooq.Generator
+
+import org.jooq.Configuration
+
+// votre code ici
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.5'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'nu.studer.jooq' version '9.0'
+}
+
+group = 'com.tp1'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.jooq:jooq:3.17.0'
+    jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
+    jooqGenerator 'org.postgresql:postgresql'
+    jooqGenerator files('src/main/resources')
+    jooqGenerator files('jars/SparkJDBC42.jar')
+
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+
+jooq {
+    version = '3.17.0'
+    edition = nu.studer.gradle.jooq.JooqEdition.OSS
+
+    configurations {
+        main {
+            generationTool {
+                generator {
+                    name = 'org.jooq.codegen.JavaGenerator'
+                    target {
+                        packageName = 'io.company.team.tables'
+                        directory = "$projectDir/build/generated/source/jooq/main"
+                        clean = true
+                    }
+                    database {
+                        name = "org.jooq.meta.postgres.PostgresDatabase"
+                        includes = '.*'
+                        excludes = 'UNUSED_TABLE|PREFIX_.*|SECRET_SCHEMA.SECRET_TABLE|SECRET_ROUTINE'
+                    }
+
+                }
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://localhost:5432/inter06'
+                    user='postgres'
+                    password='greenliveacs'
+
+                }
+            }
+        }
+    }
+}
+
+
+//task('generate') {
+//    doLast {
+//        def writer = new StringWriter()
+//        def xml = new MarkupBuilder(writer)
+//                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd') {
+//                    jdbc() {
+//                        driver('org.postgresql.Driver')
+//                        url('jdbc:postgresql://localhost:5432/inter06?user=postgres&password=greenliveacs')
+//                        schema('public')
+//                    }
+//                    generator() {
+//                        database() {
+//                        }
+//                        generate() {
+//                        }
+//                        target() {
+//                            packageName('com.alekseysamoylov.jooq.generated.db')
+//                            directory('src/main/java')
+//                        }
+//                    }
+//                }
+//
+//        GenerationTool.generate(
+//                JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
+//        )
+//    }
+//}
