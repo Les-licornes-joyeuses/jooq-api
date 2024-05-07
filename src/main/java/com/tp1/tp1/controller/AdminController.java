@@ -1,7 +1,7 @@
 package com.tp1.tp1.controller;
 
-import io.company.team.tables.Routines;
-import io.company.team.tables.tables.records.OffrePlanNonCouverteRecord;
+import io.company.team.tables.imm_base.Routines;
+import io.company.team.tables.imm_base.tables.records.OffrePlanNonCouverteRecord;
 import org.jooq.Configuration;
 import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
