@@ -4,9 +4,43 @@
 package io.company.team.tables.imm_base;
 
 
+import io.company.team.tables.imm_base.routines.Addcours;
+import io.company.team.tables.imm_base.routines.Addetudiant;
+import io.company.team.tables.imm_base.routines.Addprofesseur;
+import io.company.team.tables.imm_base.routines.Ajouteraffectation;
+import io.company.team.tables.imm_base.routines.Ajoutercompetence;
+import io.company.team.tables.imm_base.routines.Ajouterdisponibilite;
+import io.company.team.tables.imm_base.routines.Ajoutergroupe;
+import io.company.team.tables.imm_base.routines.Ajouterinscriptionetudiantgroupe;
+import io.company.team.tables.imm_base.routines.Ajouteroffre;
+import io.company.team.tables.imm_base.routines.Ajouterprealable;
+import io.company.team.tables.imm_base.routines.Attribuernote;
+import io.company.team.tables.imm_base.routines.Modifiercours;
+import io.company.team.tables.imm_base.routines.Modifieretudiant;
+import io.company.team.tables.imm_base.routines.Modifiergroupe;
+import io.company.team.tables.imm_base.routines.Modifiernote;
+import io.company.team.tables.imm_base.routines.Modifieroffre;
+import io.company.team.tables.imm_base.routines.Modifierprofesseur;
 import io.company.team.tables.imm_base.routines.OffreEffConforme;
+import io.company.team.tables.imm_base.routines.Remplitconditionsprealables;
+import io.company.team.tables.imm_base.routines.Retireraffectation;
+import io.company.team.tables.imm_base.routines.Retirercompetence;
+import io.company.team.tables.imm_base.routines.Retirercours;
+import io.company.team.tables.imm_base.routines.Retirerdisponibilite;
+import io.company.team.tables.imm_base.routines.Retireretudiant;
+import io.company.team.tables.imm_base.routines.Retirergroupe;
+import io.company.team.tables.imm_base.routines.Retirerinscriptionetudiantgroupe;
+import io.company.team.tables.imm_base.routines.Retireroffre;
+import io.company.team.tables.imm_base.routines.Retirerprealable;
+import io.company.team.tables.imm_base.routines.Retirerprofesseur;
+import io.company.team.tables.imm_base.tables.Getallprof;
+import io.company.team.tables.imm_base.tables.Getallstudents;
 import io.company.team.tables.imm_base.tables.OffrePlanNonCouverte;
+import io.company.team.tables.imm_base.tables.records.GetallprofRecord;
+import io.company.team.tables.imm_base.tables.records.GetallstudentsRecord;
 import io.company.team.tables.imm_base.tables.records.OffrePlanNonCouverteRecord;
+
+import java.time.LocalDate;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -18,6 +52,293 @@ import org.jooq.Result;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
+
+    /**
+     * Call <code>IMM_base.addcours</code>
+     */
+    public static void addcours(
+          Configuration configuration
+        , String sigle
+        , String titre
+        , Short credit
+    ) {
+        Addcours p = new Addcours();
+        p.setSigle(sigle);
+        p.setTitre(titre);
+        p.setCredit(credit);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.addetudiant</code>
+     */
+    public static void addetudiant(
+          Configuration configuration
+        , String matricule
+        , String nom
+        , LocalDate ddn
+    ) {
+        Addetudiant p = new Addetudiant();
+        p.setMatricule(matricule);
+        p.setNom(nom);
+        p.setDdn(ddn);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.addprofesseur</code>
+     */
+    public static void addprofesseur(
+          Configuration configuration
+        , String matricule
+        , String nom
+    ) {
+        Addprofesseur p = new Addprofesseur();
+        p.setMatricule(matricule);
+        p.setNom(nom);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.ajouteraffectation</code>
+     */
+    public static void ajouteraffectation(
+          Configuration configuration
+        , String _Sigle
+        , String _Trimestre
+        , String _Nogroupe
+        , String _Matriculep
+    ) {
+        Ajouteraffectation p = new Ajouteraffectation();
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+        p.set_Nogroupe(_Nogroupe);
+        p.set_Matriculep(_Matriculep);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.ajoutercompetence</code>
+     */
+    public static void ajoutercompetence(
+          Configuration configuration
+        , String _Sigle
+        , String _Matriculep
+    ) {
+        Ajoutercompetence p = new Ajoutercompetence();
+        p.set_Sigle(_Sigle);
+        p.set_Matriculep(_Matriculep);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.ajouterdisponibilite</code>
+     */
+    public static void ajouterdisponibilite(
+          Configuration configuration
+        , String _Trimestre
+        , String _Matriculep
+    ) {
+        Ajouterdisponibilite p = new Ajouterdisponibilite();
+        p.set_Trimestre(_Trimestre);
+        p.set_Matriculep(_Matriculep);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.ajoutergroupe</code>
+     */
+    public static void ajoutergroupe(
+          Configuration configuration
+        , String _Sigle
+        , String _Trimestre
+        , String _Nogroupe
+    ) {
+        Ajoutergroupe p = new Ajoutergroupe();
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+        p.set_Nogroupe(_Nogroupe);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.ajouterinscriptionetudiantgroupe</code>
+     */
+    public static void ajouterinscriptionetudiantgroupe(
+          Configuration configuration
+        , String _Matriculee
+        , String _Sigle
+        , String _Trimestre
+        , String _Nogroupe
+    ) {
+        Ajouterinscriptionetudiantgroupe p = new Ajouterinscriptionetudiantgroupe();
+        p.set_Matriculee(_Matriculee);
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+        p.set_Nogroupe(_Nogroupe);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.ajouteroffre</code>
+     */
+    public static void ajouteroffre(
+          Configuration configuration
+        , String _Sigle
+        , String _Trimestre
+    ) {
+        Ajouteroffre p = new Ajouteroffre();
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.ajouterprealable</code>
+     */
+    public static void ajouterprealable(
+          Configuration configuration
+        , String _Sigle
+        , String _Sigleprealable
+    ) {
+        Ajouterprealable p = new Ajouterprealable();
+        p.set_Sigle(_Sigle);
+        p.set_Sigleprealable(_Sigleprealable);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.attribuernote</code>
+     */
+    public static void attribuernote(
+          Configuration configuration
+        , String _Matriculee
+        , String _Sigle
+        , String _Trimestre
+        , String _Nogroupe
+        , Short _Note
+    ) {
+        Attribuernote p = new Attribuernote();
+        p.set_Matriculee(_Matriculee);
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+        p.set_Nogroupe(_Nogroupe);
+        p.set_Note(_Note);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.modifiercours</code>
+     */
+    public static void modifiercours(
+          Configuration configuration
+        , String _Sigle
+        , String _Titre
+        , Short _Credit
+    ) {
+        Modifiercours p = new Modifiercours();
+        p.set_Sigle(_Sigle);
+        p.set_Titre(_Titre);
+        p.set_Credit(_Credit);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.modifieretudiant</code>
+     */
+    public static void modifieretudiant(
+          Configuration configuration
+        , String matricule
+        , String nom
+        , LocalDate ddn
+    ) {
+        Modifieretudiant p = new Modifieretudiant();
+        p.setMatricule(matricule);
+        p.setNom(nom);
+        p.setDdn(ddn);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.modifiergroupe</code>
+     */
+    public static void modifiergroupe(
+          Configuration configuration
+        , String _Sigle
+        , String _Trimestre
+        , String _Nogroupe
+    ) {
+        Modifiergroupe p = new Modifiergroupe();
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+        p.set_Nogroupe(_Nogroupe);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.modifiernote</code>
+     */
+    public static void modifiernote(
+          Configuration configuration
+        , String _Matriculee
+        , String _Sigle
+        , String _Trimestre
+        , String _Nogroupe
+        , Short _Note
+    ) {
+        Modifiernote p = new Modifiernote();
+        p.set_Matriculee(_Matriculee);
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+        p.set_Nogroupe(_Nogroupe);
+        p.set_Note(_Note);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.modifieroffre</code>
+     */
+    public static void modifieroffre(
+          Configuration configuration
+        , String _Sigle
+        , String _Trimestre
+    ) {
+        Modifieroffre p = new Modifieroffre();
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.modifierprofesseur</code>
+     */
+    public static void modifierprofesseur(
+          Configuration configuration
+        , String matricule
+        , String nom
+    ) {
+        Modifierprofesseur p = new Modifierprofesseur();
+        p.setMatricule(matricule);
+        p.setNom(nom);
+
+        p.execute(configuration);
+    }
 
     /**
      * Call <code>IMM_base.offre_eff_conforme</code>
@@ -38,6 +359,230 @@ public class Routines {
         OffreEffConforme f = new OffreEffConforme();
 
         return f.asField();
+    }
+
+    /**
+     * Call <code>IMM_base.remplitconditionsprealables</code>
+     */
+    public static Boolean remplitconditionsprealables(
+          Configuration configuration
+        , String _Matriculee
+        , String _Sigle
+    ) {
+        Remplitconditionsprealables f = new Remplitconditionsprealables();
+        f.set_Matriculee(_Matriculee);
+        f.set_Sigle(_Sigle);
+
+        f.execute(configuration);
+        return f.getReturnValue();
+    }
+
+    /**
+     * Get <code>IMM_base.remplitconditionsprealables</code> as a field.
+     */
+    public static Field<Boolean> remplitconditionsprealables(
+          String _Matriculee
+        , String _Sigle
+    ) {
+        Remplitconditionsprealables f = new Remplitconditionsprealables();
+        f.set_Matriculee(_Matriculee);
+        f.set_Sigle(_Sigle);
+
+        return f.asField();
+    }
+
+    /**
+     * Get <code>IMM_base.remplitconditionsprealables</code> as a field.
+     */
+    public static Field<Boolean> remplitconditionsprealables(
+          Field<String> _Matriculee
+        , Field<String> _Sigle
+    ) {
+        Remplitconditionsprealables f = new Remplitconditionsprealables();
+        f.set_Matriculee(_Matriculee);
+        f.set_Sigle(_Sigle);
+
+        return f.asField();
+    }
+
+    /**
+     * Call <code>IMM_base.retireraffectation</code>
+     */
+    public static void retireraffectation(
+          Configuration configuration
+        , String _Sigle
+        , String _Matriculep
+    ) {
+        Retireraffectation p = new Retireraffectation();
+        p.set_Sigle(_Sigle);
+        p.set_Matriculep(_Matriculep);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retirercompetence</code>
+     */
+    public static void retirercompetence(
+          Configuration configuration
+        , String _Sigle
+        , String _Matriculep
+    ) {
+        Retirercompetence p = new Retirercompetence();
+        p.set_Sigle(_Sigle);
+        p.set_Matriculep(_Matriculep);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retirercours</code>
+     */
+    public static void retirercours(
+          Configuration configuration
+        , String _Sigle
+    ) {
+        Retirercours p = new Retirercours();
+        p.set_Sigle(_Sigle);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retirerdisponibilite</code>
+     */
+    public static void retirerdisponibilite(
+          Configuration configuration
+        , String _Trimestre
+        , String _Matriculep
+    ) {
+        Retirerdisponibilite p = new Retirerdisponibilite();
+        p.set_Trimestre(_Trimestre);
+        p.set_Matriculep(_Matriculep);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retireretudiant</code>
+     */
+    public static void retireretudiant(
+          Configuration configuration
+        , String matricule
+    ) {
+        Retireretudiant p = new Retireretudiant();
+        p.setMatricule(matricule);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retirergroupe</code>
+     */
+    public static void retirergroupe(
+          Configuration configuration
+        , String _Sigle
+    ) {
+        Retirergroupe p = new Retirergroupe();
+        p.set_Sigle(_Sigle);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retirerinscriptionetudiantgroupe</code>
+     */
+    public static void retirerinscriptionetudiantgroupe(
+          Configuration configuration
+        , String _Matriculee
+        , String _Sigle
+        , String _Trimestre
+        , String _Nogroupe
+    ) {
+        Retirerinscriptionetudiantgroupe p = new Retirerinscriptionetudiantgroupe();
+        p.set_Matriculee(_Matriculee);
+        p.set_Sigle(_Sigle);
+        p.set_Trimestre(_Trimestre);
+        p.set_Nogroupe(_Nogroupe);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retireroffre</code>
+     */
+    public static void retireroffre(
+          Configuration configuration
+        , String _Sigle
+    ) {
+        Retireroffre p = new Retireroffre();
+        p.set_Sigle(_Sigle);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retirerprealable</code>
+     */
+    public static void retirerprealable(
+          Configuration configuration
+        , String _Sigle
+        , String _Sigleprealable
+    ) {
+        Retirerprealable p = new Retirerprealable();
+        p.set_Sigle(_Sigle);
+        p.set_Sigleprealable(_Sigleprealable);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.retirerprofesseur</code>
+     */
+    public static void retirerprofesseur(
+          Configuration configuration
+        , String matricule
+    ) {
+        Retirerprofesseur p = new Retirerprofesseur();
+        p.setMatricule(matricule);
+
+        p.execute(configuration);
+    }
+
+    /**
+     * Call <code>IMM_base.getallprof</code>.
+     */
+    public static Result<GetallprofRecord> getallprof(
+          Configuration configuration
+    ) {
+        return configuration.dsl().selectFrom(io.company.team.tables.imm_base.tables.Getallprof.GETALLPROF.call(
+        )).fetch();
+    }
+
+    /**
+     * Get <code>IMM_base.getallprof</code> as a table.
+     */
+    public static Getallprof getallprof() {
+        return io.company.team.tables.imm_base.tables.Getallprof.GETALLPROF.call(
+        );
+    }
+
+    /**
+     * Call <code>IMM_base.getallstudents</code>.
+     */
+    public static Result<GetallstudentsRecord> getallstudents(
+          Configuration configuration
+    ) {
+        return configuration.dsl().selectFrom(io.company.team.tables.imm_base.tables.Getallstudents.GETALLSTUDENTS.call(
+        )).fetch();
+    }
+
+    /**
+     * Get <code>IMM_base.getallstudents</code> as a table.
+     */
+    public static Getallstudents getallstudents() {
+        return io.company.team.tables.imm_base.tables.Getallstudents.GETALLSTUDENTS.call(
+        );
     }
 
     /**

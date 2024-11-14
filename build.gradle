@@ -4,7 +4,6 @@ import org.jooq.util.jaxb.tools.StringAdapter
 import groovy.xml.MarkupBuilder
 import org.jooq.Generator
 
-import org.jooq.Configuration
 
 // votre code ici
 
@@ -39,6 +38,9 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    implementation 'io.springfox:springfox-swagger2:3.0.0'
+//    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     implementation 'org.jooq:jooq:3.17.0'
     jooqGenerator 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
     jooqGenerator 'org.postgresql:postgresql'
@@ -57,61 +59,65 @@ tasks.named('test') {
 jooq {
     version = '3.17.0'
     edition = nu.studer.gradle.jooq.JooqEdition.OSS
+configurations {
+    executions {
+        create("main"){
+            configurations {
+                main {
+                    generationTool {
+                        generator {
+                            name = 'org.jooq.codegen.JavaGenerator'
+                            target {
+                                packageName = 'io.company.team.tables'
+                                directory = "$projectDir/build/generated/source/jooq/main"
+                                clean = true
+                            }
+                            database {
+                                name = "org.jooq.meta.postgres.PostgresDatabase"
+                                schemata {
+                                    schema{
+                                        inputSchema = 'IMM_base'
 
-    configurations {
-        main {
-            generationTool {
-                generator {
-                    name = 'org.jooq.codegen.JavaGenerator'
-                    target {
-                        packageName = 'io.company.team.tables'
-                        directory = "$projectDir/build/generated/source/jooq/main"
-                        clean = true
+                                    }
+
+                                    schema{
+                                        inputSchema = 'imm_etudiant'
+
+                                    }
+
+                                    schema{
+                                        inputSchema = 'imm_professeur'
+
+                                    }
+
+                                    schema{
+                                        inputSchema = 'MDD'
+
+                                    }
+                                }
+                                includes = '.*'
+                                excludes = 'UNUSED_TABLE|PREFIX_.*|SECRET_SCHEMA.SECRET_TABLE|SECRET_ROUTINE|TRIGGER'
+                            }
+
+                        }
+                        jdbc {
+                            driver = 'org.postgresql.Driver'
+                            url = 'jdbc:postgresql://localhost:5432/inter06'
+                            user='postgres'
+                            password='greenliveacs'
+
+                        }
                     }
-                    database {
-                        name = "org.jooq.meta.postgres.PostgresDatabase"
-                        includes = '.*'
-                        excludes = 'UNUSED_TABLE|PREFIX_.*|SECRET_SCHEMA.SECRET_TABLE|SECRET_ROUTINE'
-                    }
-
-                }
-                jdbc {
-                    driver = 'org.postgresql.Driver'
-                    url = 'jdbc:postgresql://localhost:5432/inter06'
-                    user='postgres'
-                    password='greenliveacs'
-
                 }
             }
+
         }
+
     }
+
+}
+
 }
 
 
-//task('generate') {
-//    doLast {
-//        def writer = new StringWriter()
-//        def xml = new MarkupBuilder(writer)
-//                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd') {
-//                    jdbc() {
-//                        driver('org.postgresql.Driver')
-//                        url('jdbc:postgresql://localhost:5432/inter06?user=postgres&password=greenliveacs')
-//                        schema('public')
-//                    }
-//                    generator() {
-//                        database() {
-//                        }
-//                        generate() {
-//                        }
-//                        target() {
-//                            packageName('com.alekseysamoylov.jooq.generated.db')
-//                            directory('src/main/java')
-//                        }
-//                    }
-//                }
-//
-//        GenerationTool.generate(
-//                JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
-//        )
-//    }
-//}
+

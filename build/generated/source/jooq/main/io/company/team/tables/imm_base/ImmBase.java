@@ -5,7 +5,11 @@ package io.company.team.tables.imm_base;
 
 
 import io.company.team.tables.DefaultCatalog;
+import io.company.team.tables.imm_base.tables.Getallprof;
+import io.company.team.tables.imm_base.tables.Getallstudents;
 import io.company.team.tables.imm_base.tables.OffrePlanNonCouverte;
+import io.company.team.tables.imm_base.tables.records.GetallprofRecord;
+import io.company.team.tables.imm_base.tables.records.GetallstudentsRecord;
 import io.company.team.tables.imm_base.tables.records.OffrePlanNonCouverteRecord;
 
 import java.util.Arrays;
@@ -30,6 +34,52 @@ public class ImmBase extends SchemaImpl {
      * The reference instance of <code>IMM_base</code>
      */
     public static final ImmBase IMM_BASE = new ImmBase();
+
+    /**
+     * The table <code>IMM_base.getallprof</code>.
+     */
+    public final Getallprof GETALLPROF = Getallprof.GETALLPROF;
+
+    /**
+     * Call <code>IMM_base.getallprof</code>.
+     */
+    public static Result<GetallprofRecord> GETALLPROF(
+          Configuration configuration
+    ) {
+        return configuration.dsl().selectFrom(io.company.team.tables.imm_base.tables.Getallprof.GETALLPROF.call(
+        )).fetch();
+    }
+
+    /**
+     * Get <code>IMM_base.getallprof</code> as a table.
+     */
+    public static Getallprof GETALLPROF() {
+        return io.company.team.tables.imm_base.tables.Getallprof.GETALLPROF.call(
+        );
+    }
+
+    /**
+     * The table <code>IMM_base.getallstudents</code>.
+     */
+    public final Getallstudents GETALLSTUDENTS = Getallstudents.GETALLSTUDENTS;
+
+    /**
+     * Call <code>IMM_base.getallstudents</code>.
+     */
+    public static Result<GetallstudentsRecord> GETALLSTUDENTS(
+          Configuration configuration
+    ) {
+        return configuration.dsl().selectFrom(io.company.team.tables.imm_base.tables.Getallstudents.GETALLSTUDENTS.call(
+        )).fetch();
+    }
+
+    /**
+     * Get <code>IMM_base.getallstudents</code> as a table.
+     */
+    public static Getallstudents GETALLSTUDENTS() {
+        return io.company.team.tables.imm_base.tables.Getallstudents.GETALLSTUDENTS.call(
+        );
+    }
 
     /**
      * The table <code>IMM_base.offre_plan_non_couverte</code>.
@@ -70,6 +120,8 @@ public class ImmBase extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
+            Getallprof.GETALLPROF,
+            Getallstudents.GETALLSTUDENTS,
             OffrePlanNonCouverte.OFFRE_PLAN_NON_COUVERTE
         );
     }

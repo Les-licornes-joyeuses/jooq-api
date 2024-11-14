@@ -5,10 +5,9 @@ package io.company.team.tables;
 
 
 import io.company.team.tables.imm_base.ImmBase;
-import io.company.team.tables.information_schema.InformationSchema;
+import io.company.team.tables.imm_etudiant.ImmEtudiant;
+import io.company.team.tables.imm_professeur.ImmProfesseur;
 import io.company.team.tables.mdd.Mdd;
-import io.company.team.tables.pg_catalog.PgCatalog;
-import io.company.team.tables.public_.Public;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,24 +36,19 @@ public class DefaultCatalog extends CatalogImpl {
     public final ImmBase IMM_BASE = ImmBase.IMM_BASE;
 
     /**
-     * The schema <code>information_schema</code>.
+     * The schema <code>imm_etudiant</code>.
      */
-    public final InformationSchema INFORMATION_SCHEMA = InformationSchema.INFORMATION_SCHEMA;
+    public final ImmEtudiant IMM_ETUDIANT = ImmEtudiant.IMM_ETUDIANT;
+
+    /**
+     * The schema <code>imm_professeur</code>.
+     */
+    public final ImmProfesseur IMM_PROFESSEUR = ImmProfesseur.IMM_PROFESSEUR;
 
     /**
      * The schema <code>MDD</code>.
      */
     public final Mdd MDD = Mdd.MDD;
-
-    /**
-     * The schema <code>pg_catalog</code>.
-     */
-    public final PgCatalog PG_CATALOG = PgCatalog.PG_CATALOG;
-
-    /**
-     * The schema <code>public</code>.
-     */
-    public final Public PUBLIC = Public.PUBLIC;
 
     /**
      * No further instances allowed
@@ -67,10 +61,9 @@ public class DefaultCatalog extends CatalogImpl {
     public final List<Schema> getSchemas() {
         return Arrays.asList(
             ImmBase.IMM_BASE,
-            InformationSchema.INFORMATION_SCHEMA,
-            Mdd.MDD,
-            PgCatalog.PG_CATALOG,
-            Public.PUBLIC
+            ImmEtudiant.IMM_ETUDIANT,
+            ImmProfesseur.IMM_PROFESSEUR,
+            Mdd.MDD
         );
     }
 

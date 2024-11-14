@@ -4,7 +4,11 @@
 package io.company.team.tables.imm_base;
 
 
+import io.company.team.tables.imm_base.tables.Getallprof;
+import io.company.team.tables.imm_base.tables.Getallstudents;
 import io.company.team.tables.imm_base.tables.OffrePlanNonCouverte;
+import io.company.team.tables.imm_base.tables.records.GetallprofRecord;
+import io.company.team.tables.imm_base.tables.records.GetallstudentsRecord;
 import io.company.team.tables.imm_base.tables.records.OffrePlanNonCouverteRecord;
 
 import org.jooq.Configuration;
@@ -16,6 +20,52 @@ import org.jooq.Result;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>IMM_base.getallprof</code>.
+     */
+    public static final Getallprof GETALLPROF = Getallprof.GETALLPROF;
+
+    /**
+     * Call <code>IMM_base.getallprof</code>.
+     */
+    public static Result<GetallprofRecord> GETALLPROF(
+          Configuration configuration
+    ) {
+        return configuration.dsl().selectFrom(io.company.team.tables.imm_base.tables.Getallprof.GETALLPROF.call(
+        )).fetch();
+    }
+
+    /**
+     * Get <code>IMM_base.getallprof</code> as a table.
+     */
+    public static Getallprof GETALLPROF() {
+        return io.company.team.tables.imm_base.tables.Getallprof.GETALLPROF.call(
+        );
+    }
+
+    /**
+     * The table <code>IMM_base.getallstudents</code>.
+     */
+    public static final Getallstudents GETALLSTUDENTS = Getallstudents.GETALLSTUDENTS;
+
+    /**
+     * Call <code>IMM_base.getallstudents</code>.
+     */
+    public static Result<GetallstudentsRecord> GETALLSTUDENTS(
+          Configuration configuration
+    ) {
+        return configuration.dsl().selectFrom(io.company.team.tables.imm_base.tables.Getallstudents.GETALLSTUDENTS.call(
+        )).fetch();
+    }
+
+    /**
+     * Get <code>IMM_base.getallstudents</code> as a table.
+     */
+    public static Getallstudents GETALLSTUDENTS() {
+        return io.company.team.tables.imm_base.tables.Getallstudents.GETALLSTUDENTS.call(
+        );
+    }
 
     /**
      * The table <code>IMM_base.offre_plan_non_couverte</code>.
